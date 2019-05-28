@@ -10,27 +10,21 @@ import base64
 url_prefix = 'https://api.ai.qq.com/fcgi-bin/'
 
 
-def setParams(array, key, value):
-    array[key] = value
-
-
-def genSignString(parser):
-    uri_str = ''
-    for key in sorted(parser.keys()):
-        if key == 'app_key':
-            continue
-        uri_str += "%s=%s&" % (key, urllib.parse.quote(str(parser[key]), safe=''))
-    sign_str = uri_str + 'app_key=' + parser['app_key']
-
-    hash_md5 = hashlib.md5(sign_str.encode("latin1"))
-    return hash_md5.hexdigest().upper()
-
-
 class AiPlat(object):
     def __init__(self, app_id, app_key):
         self.app_id = app_id
         self.app_key = app_key
         self.data = {}
+    
+    def genSignString(self, parser):
+        uri_str = ''
+        for key in sorted(parser.keys()):
+            if key == 'app_key':
+                continue
+            uri_str += "%s=%s&" % (key, urllib.parse.quote(str(parser[key]), safe=''))
+        sign_str = uri_str + 'app_key=' + self.app_key
+        hash_md5 = hashlib.md5(sign_str.encode("latin1"))
+        return hash_md5.hexdigest().upper()
 
     def invoke(self, params):
         self.url_data = urllib.parse.urlencode(params).encode(encoding='utf-8')
@@ -55,17 +49,18 @@ class AiPlat(object):
                 return dict_error
 
     # 智能闲聊
-    def getNlpTextChat(self, session, question):
+    def getNlpTextChat(self, question):
         self.data = {}
         self.url = url_prefix + 'nlp/nlp_textchat'
-        setParams(self.data, 'app_id', self.app_id)
-        setParams(self.data, 'app_key', self.app_key)
-        setParams(self.data, 'time_stamp', int(time.time()))
-        setParams(self.data, 'nonce_str', int(time.time()))
-        setParams(self.data, 'session', session)
-        setParams(self.data, 'question', question)
-        sign_str = genSignString(self.data)
-        setParams(self.data, 'sign', sign_str)
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'session': 10000,
+            'question': question
+        }
+        self.data['sign'] = self.genSignString(self.data)
 
         return self.invoke(self.data)["data"]["answer"]
 
@@ -77,36 +72,38 @@ class AiPlat(object):
             res = base64.b64decode(result)
             f.close()
 
-        self.data = {}
         self.url = url_prefix + 'aai/aai_asr'
-        setParams(self.data, 'app_id', self.app_id)
-        setParams(self.data, 'app_key', self.app_key)
-        setParams(self.data, 'time_stamp', int(time.time()))
-        setParams(self.data, 'nonce_str', int(time.time()))
-        setParams(self.data, 'format', 2)
-        setParams(self.data, 'speech', res)
-        setParams(self.data, 'rate', 16000)
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'format': 2,
+            'speech': res,
+            'rate': 16000
+        }
+        self.data['sign'] = self.genSignString(self.data)
 
         return self.invoke(self.data)['data']['text']
 
     # 语音合成
     def aai_tts(self, sentence, filepath):  # filepath为音频文件的存档位置
-        
-        self.data = {}
+
         self.url = url_prefix + 'aai/aai_tts'
-        setParams(self.data, 'app_id', self.app_id)
-        setParams(self.data, 'app_key', self.app_key)
-        setParams(self.data, 'time_stamp', int(time.time()))
-        setParams(self.data, 'nonce_str', int(time.time()))
-        setParams(self.data, 'speaker', 1)
-        setParams(self.data, 'format', 2)
-        setParams(self.data, 'volume', 0)
-        setParams(self.data, 'speed', 100)
-        setParams(self.data, 'text', sentence)
-        setParams(self.data, 'aht', 0)
-        setParams(self.data, 'apc', 58)
-        sign_str = genSignString(self.data)
-        setParams(self.data, 'sign', sign_str)
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'speaker': 1,
+            'format': 2,
+            'volume': 0,
+            'speed': 100,
+            'text': sentence,
+            'aht': 0,
+            'apc': 58,
+        }
+        self.data['sign'] = self.genSignString(self.data)
 
         result = self.invoke(self.data)['data']['speech']
 
@@ -116,17 +113,18 @@ class AiPlat(object):
             f.close()
 
     # 文字翻译
-    def textTrans(self, sentence):  # filepath为音频文件的存档位置
-        self.data = {}
+    def textTrans(self, sentence):
+
         self.url = url_prefix + 'nlp/nlp_texttrans'
-        setParams(self.data, 'app_id', self.app_id)
-        setParams(self.data, 'app_key', self.app_key)
-        setParams(self.data, 'time_stamp', int(time.time()))
-        setParams(self.data, 'nonce_str', int(time.time()))
-        setParams(self.data, 'type', 0)
-        setParams(self.data, 'text', sentence)
-        sign_str = genSignString(self.data)
-        setParams(self.data, 'sign', sign_str)
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'type': 0,  # 设置翻译模式，英译中、中译英、英汉互译
+            'text': sentence,
+        }
+        self.data['sign'] = self.genSignString(self.data)
 
         return self.invoke(self.data)['data']['trans_text']
 
@@ -137,22 +135,26 @@ class AiPlat(object):
             result = f.read()
             res = base64.b64decode(result)
             f.close()
-        
-        self.data = {}
+
         self.url = url_prefix + 'nlp/nlp_speechtranslate'
-        setParams(self.data, 'app_id', self.app_id)
-        setParams(self.data, 'app_key', self.app_key)
-        setParams(self.data, 'time_stamp', int(time.time()))
-        setParams(self.data, 'nonce_str', int(time.time()))
-        setParams(self.data, 'format', 8)  # MP3
-        setParams(self.data, 'seq', 0)
-        setParams(self.data, 'end', 1)  # Finished or in line
-        setParams(self.data, 'seq', 0)
-        setParams(self.data, 'session_id', 'test1')  # Name of the sppech sequence if it occur
-        setParams(self.data, 'speech_chunk', res)
-        sign_str = genSignString(self.data)
-        setParams(self.data, 'sign', sign_str)
-        setParams(self.data, 'source', 'zh')  # source language
-        setParams(self.data, 'target', 'en')  # target language
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'format': 8,  # MP3
+            'seq': 0,
+            'end': 1,  # Finished or in line
+            'seq': 0,
+            'session_id': 'test1',  # Name of the sppech sequence if it occur
+            'speech_chunk': res,
+            'source': 'zh',  # source language
+            'target': 'en',  # target language
+        }
+        self.data['sign'] = self.genSignString(self.data)
 
         return [self.invoke(self.data)['data']['source_text'], self.invoke(self.data)['data']['target_text']]
+
+
+client = AiPlat('', '')
+print(client.getNlpTextChat('你好'))
