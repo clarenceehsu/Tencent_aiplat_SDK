@@ -1,3 +1,5 @@
+# _*_ coding:utf-8 _*_
+
 import hashlib
 import urllib.parse
 import urllib.request
@@ -5,6 +7,7 @@ import urllib.error
 import json
 import time
 import base64
+import os
 
 # 接口api
 url_prefix = 'https://api.ai.qq.com/fcgi-bin/'
@@ -67,12 +70,9 @@ class AiPlat(object):
     # 语音识别
     def aai_asr(self, filepath):  # filepath为音频文件的存档位置
 
-        with open(filepath, 'r') as f:
-            result = f.read()
-            res = base64.b64decode(result)
-            f.close()
+        res = str(base64.b64encode(open(filepath, "rb").read()), 'utf-8')
 
-        self.url = url_prefix + 'aai/aai_asr'
+        self.url = 'https://api.ai.qq.com/fcgi-bin/aai/aai_asr'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -80,7 +80,6 @@ class AiPlat(object):
             'nonce_str': int(time.time()),
             'format': 2,
             'speech': res,
-            'rate': 16000
         }
         self.data['sign'] = self.genSignString(self.data)
 
@@ -95,7 +94,7 @@ class AiPlat(object):
             'app_key': self.app_key,
             'time_stamp': int(time.time()),
             'nonce_str': int(time.time()),
-            'speaker': 1,
+            'speaker': 6,
             'format': 2,
             'volume': 0,
             'speed': 100,
@@ -131,10 +130,7 @@ class AiPlat(object):
     # 语音翻译
     def speechTrans(self, filepath):  # filepath为音频文件的存档位置
         
-        with open(filepath, 'r') as f:
-            result = f.read()
-            res = base64.b64decode(result)
-            f.close()
+        res = str(base64.b64encode(open(filepath, "rb").read()), 'utf-8')
 
         self.url = url_prefix + 'nlp/nlp_speechtranslate'
         self.data = {
@@ -155,6 +151,30 @@ class AiPlat(object):
 
         return [self.invoke(self.data)['data']['source_text'], self.invoke(self.data)['data']['target_text']]
 
+    def getAaiWxAsrs(self, filepath, speech_id, end_flag):
+        self.url = url_prefix + 'aai/aai_wxasrs'
+        file_len = os.path.getsize(filepath)
+        res = str(base64.b64encode(open(filepath, "rb").read()), 'utf-8')
+
+        self.data = {
+            'app_id': self.app_id,
+            'app_key': self.app_key,
+            'time_stamp': int(time.time()),
+            'nonce_str': int(time.time()),
+            'format': 2,
+            'rate': 16000,
+            'bits': 16,
+            'seq': 0,
+            'len': file_len,
+            'end': end_flag,
+            'speech_id': speech_id,
+            'speech_chunk': res,
+            'cont_res': 1,
+        }
+        self.data['sign'] = self.genSignString(self.data)
+
+        return self.invoke(self.data)['data']['speech_text']
+
 
 client = AiPlat('', '')
-print(client.getNlpTextChat('你好'))
+print(client.textTrans('Hello'))
