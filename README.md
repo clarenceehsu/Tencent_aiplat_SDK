@@ -1,15 +1,25 @@
 # Tencent_aiplat_SDK 腾讯AI平台SDK
 
-**第二次更新**：对目前的每一个功能进行了测试，并且对代码结构进行了精简；添加了一段示例代码方便测试。
+
+**基于 Python3**
+
+由于平台只提供了文档以及简单的 Python2 样例，所以我读了一下文档，写了这个 SDK 。
+
+有时间的话我会继续完善成一个完整方便的 SDK ，如果有问题欢迎 issue 。
+
+## 更新日志
+
+### 8/1/2019
+- 对代码的结构进行了标准化，减少了调用次数，增加了错误值返回；
+- 函数名遵从平台命名进行规范，防止误操作；
+- 抛弃了以往图方便的“开箱即用”的风格，直接返回字典，方便在调用后进行自定义调整。
+
+### 5/28/2019
+
+- 对目前的每一个功能进行了测试，并且对代码结构进行了精简；添加了一段示例代码方便测试。
 
 ---
 
-**基于Python3**
+**Python3 Only**
 
-平台只提供了API和文档，网上查了也没有（为什么？？？）。所以我读了一下文档，简单地写了这一个SDK。
-
-目前只是一部分我用到的功能，**以供参考学习之用**。
-
-作为一个懒人，**有时间的话我可能会继续写，做成一个完整方便的SDK**，如果有问题欢迎issue。
-
-**Only Python version here recently. Issue or commits if you have it in another language or want to.**
+SDK for Tencent AI Platform. Issue and commit if any error occours.
