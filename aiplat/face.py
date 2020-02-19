@@ -1,16 +1,15 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
+import base64
 
 from aiplat.base import AiPlatBase
 
 
 class face(AiPlatBase):
 
-    def face_detectface(self, image_path, mode=1):
+    def face_detectface(self, image_path: str, mode: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_detectface'
+        self.url = self.url_prefix + 'face/face_detectface'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -26,9 +25,10 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_detectmultiface(self, image_path):
+    def face_detectmultiface(self, image_path: str):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_detectmultiface'
+        self.url = self.url_prefix + 'face/face_detectmultiface'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -43,10 +43,11 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_detectcrossageface(self, source_image, target_image):
+    def face_detectcrossageface(self, source_image: str, target_image: str):
+
         source_image_res = str(base64.b64encode(open(source_image, "rb").read()), 'utf-8')
         target_image_res = str(base64.b64encode(open(target_image, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_detectcrossageface'
+        self.url = self.url_prefix + 'face/face_detectcrossageface'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -62,9 +63,10 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_faceshape(self, image_path, mode=1):
+    def face_faceshape(self, image_path: str, mode: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_faceshape'
+        self.url = self.url_prefix + 'face/face_faceshape'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -80,10 +82,11 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_facecompare(self, image_a, image_b):
+    def face_facecompare(self, image_a: str, image_b: str):
+
         image_a_res = str(base64.b64encode(open(image_a, "rb").read()), 'utf-8')
         image_b_res = str(base64.b64encode(open(image_b, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_facecompare'
+        self.url = self.url_prefix + 'face/face_facecompare'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -99,9 +102,10 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_faceidentify(self, image_path, group_id, topn):
+    def face_faceidentify(self, image_path: str, group_id: str, topn: int):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_faceidentify'
+        self.url = self.url_prefix + 'face/face_faceidentify'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -118,9 +122,15 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_newperson(self, group_ids, person_id, image_path, person_name, tag):
+    def face_newperson(self,
+                       group_ids: str,
+                       person_id: str,
+                       image_path: str,
+                       person_name: str,
+                       tag: str):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_newperson'
+        self.url = self.url_prefix + 'face/face_newperson'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -139,8 +149,9 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_delperson(self, person_id):
-        self.url = self.url + 'face/face_delperson'
+    def face_delperson(self, person_id: str):
+
+        self.url = self.url_prefix + 'face/face_delperson'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -155,9 +166,10 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_addface(self, person_id, image_path, tag):
+    def face_addface(self, person_id: str, image_path: str, tag: str):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_addface'
+        self.url = self.url_prefix + 'face/face_addface'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -174,8 +186,9 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_delface(self, person_id, face_ids):
-        self.url = self.url + 'face/face_delface'
+    def face_delface(self, person_id: str, face_ids: str):
+
+        self.url = self.url_prefix + 'face/face_delface'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -191,9 +204,10 @@ class face(AiPlatBase):
 
         return result['data']
 
-    def face_faceverify(self, image_path, person_id):
+    def face_faceverify(self, image_path: str, person_id: str):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'face/face_faceverify'
+        self.url = self.url_prefix + 'face/face_faceverify'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,

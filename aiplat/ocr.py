@@ -1,14 +1,12 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
+import base64
 
 from aiplat.base import AiPlatBase
 
 
 class ocr(AiPlatBase):
 
-    def ocr_idcardocr(self, image_path, card_type):
+    def ocr_idcardocr(self, image_path: str, card_type: int):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_idcardocr'
@@ -38,7 +36,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_driverlicenseocr(self, image_path, card_type):
+    def ocr_driverlicenseocr(self, image_path: str, card_type: int):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_driverlicenseocr'
@@ -57,7 +55,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_generalocr(self, image_path):
+    def ocr_generalocr(self, image_path: str):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_generalocr'
@@ -75,7 +73,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_bizlicenseocr(self, image_path):
+    def ocr_bizlicenseocr(self, image_path: str):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_bizlicenseocr'
@@ -93,7 +91,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_creditcardocr(self, image_path):
+    def ocr_creditcardocr(self, image_path: str):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_creditcardocr'
@@ -111,7 +109,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_handwritingocr(self, image_path='', image_url=''):
+    def ocr_handwritingocr(self, image_path: str = None, image_url: str = None):
 
         if image_path:
             image_path = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
@@ -131,7 +129,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_plateocr(self, image_path='', image_url=''):
+    def ocr_plateocr(self, image_path: str = None, image_url: str = None):
 
         if image_path:
             image_path = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
@@ -151,7 +149,7 @@ class ocr(AiPlatBase):
 
         return result['data']
 
-    def ocr_bcocr(self, image_path):
+    def ocr_bcocr(self, image_path: str):
 
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
         self.url = self.url_prefix + 'ocr/ocr_bcocr'
@@ -168,4 +166,3 @@ class ocr(AiPlatBase):
             return result['msg']
 
         return result['data']
-

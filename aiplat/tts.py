@@ -1,15 +1,21 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
+import base64
 
 from aiplat.base import AiPlatBase
 
 
 class tts(AiPlatBase):
 
-    def aai_tts(self, text, speaker=6, format=2, volume=0, speed=100, aht=0, apc=58):
-        self.url = self.url + 'aai/aai_tts'
+    def aai_tts(self,
+                text: str,
+                speaker: int = 6,
+                format: int = 2,
+                volume: int = 0,
+                speed: int = 100,
+                aht: int = 0,
+                apc: int = 58):
+
+        self.url = self.url_prefix + 'aai/aai_tts'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -37,8 +43,9 @@ class tts(AiPlatBase):
 
         return result['data']
 
-    def aai_tta(self, text, model_type=0, speed=0):
-        self.url = self.url + 'aai/aai_tta'
+    def aai_tta(self, text: str, model_type: int = 0, speed: int = 0):
+
+        self.url = self.url_prefix + 'aai/aai_tta'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,

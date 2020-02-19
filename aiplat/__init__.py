@@ -1,1 +1,1 @@
-from aiplat.main import *
+from aiplat.main import Aiplat

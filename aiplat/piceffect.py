@@ -1,16 +1,15 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
+import base64
 
 from aiplat.base import AiPlatBase
 
 
 class piceffect(AiPlatBase):
 
-    def ptu_imgfilter(self, image_path, filter=1):
+    def ptu_imgfilter(self, image_path: str, filter: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'ptu/ptu_imgfilter'
+        self.url = self.url_prefix + 'ptu/ptu_imgfilter'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -31,9 +30,10 @@ class piceffect(AiPlatBase):
 
         return result['data']
 
-    def vision_imgfilter(self, image_path, filter=1, session_id=1234):
+    def vision_imgfilter(self, image_path: str, filter: int = 1, session_id: int = 1234):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'vision/vision_imgfilter'
+        self.url = self.url_prefix + 'vision/vision_imgfilter'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -55,9 +55,10 @@ class piceffect(AiPlatBase):
 
         return result['data']
 
-    def ptu_facecosmetic(self, image_path, cosmetic=1):
+    def ptu_facecosmetic(self, image_path: str, cosmetic: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'ptu/ptu_facecosmetic'
+        self.url = self.url_prefix + 'ptu/ptu_facecosmetic'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -79,9 +80,10 @@ class piceffect(AiPlatBase):
 
         return result['data']
 
-    def ptu_facedecoration(self, image_path, decoration=1):
+    def ptu_facedecoration(self, image_path: str, decoration: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'ptu/ptu_facedecoration'
+        self.url = self.url_prefix + 'ptu/ptu_facedecoration'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -103,9 +105,10 @@ class piceffect(AiPlatBase):
 
         return result['data']
 
-    def ptu_facesticker(self, image_path, sticker=1):
+    def ptu_facesticker(self, image_path: str, sticker: int = 1):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'ptu/ptu_facesticker'
+        self.url = self.url_prefix + 'ptu/ptu_facesticker'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,
@@ -127,9 +130,10 @@ class piceffect(AiPlatBase):
 
         return result['data']
 
-    def ptu_faceage(self, image_path):
+    def ptu_faceage(self, image_path: str):
+
         res = str(base64.b64encode(open(image_path, "rb").read()), 'utf-8')
-        self.url = self.url + 'ptu/ptu_faceage'
+        self.url = self.url_prefix + 'ptu/ptu_faceage'
         self.data = {
             'app_id': self.app_id,
             'app_key': self.app_key,

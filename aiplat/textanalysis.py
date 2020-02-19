@@ -1,14 +1,12 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
 
 from aiplat.base import AiPlatBase
 
 
 class textanalysis(AiPlatBase):
 
-    def nlp_wordseg(self, text):
+    def nlp_wordseg(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_wordseg'
         self.data = {
             'app_id': self.app_id,
@@ -24,7 +22,8 @@ class textanalysis(AiPlatBase):
 
         return result['data']
 
-    def nlp_wordpos(self, text):
+    def nlp_wordpos(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_wordpos'
         self.data = {
             'app_id': self.app_id,
@@ -40,7 +39,8 @@ class textanalysis(AiPlatBase):
 
         return result['data']
 
-    def nlp_wordner(self, text):
+    def nlp_wordner(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_wordner'
         self.data = {
             'app_id': self.app_id,
@@ -56,7 +56,8 @@ class textanalysis(AiPlatBase):
 
         return result['data']
 
-    def nlp_wordsyn(self, text):
+    def nlp_wordsyn(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_wordsyn'
         self.data = {
             'app_id': self.app_id,

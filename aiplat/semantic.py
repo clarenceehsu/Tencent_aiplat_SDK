@@ -1,14 +1,12 @@
-# _*_ coding:utf-8 _*_
-import base64
 import time
-import os
 
 from aiplat.base import AiPlatBase
 
 
 class semantic(AiPlatBase):
 
-    def nlp_wordcom(self, text):
+    def nlp_wordcom(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_wordcom'
         self.data = {
             'app_id': self.app_id,
@@ -24,7 +22,8 @@ class semantic(AiPlatBase):
 
         return result['data']
 
-    def nlp_textpolar(self, text):
+    def nlp_textpolar(self, text: str):
+
         self.url = self.url_prefix + 'nlp/nlp_textpolar'
         self.data = {
             'app_id': self.app_id,

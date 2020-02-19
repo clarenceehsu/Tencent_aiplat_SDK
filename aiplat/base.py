@@ -1,16 +1,13 @@
-# _*_ coding:utf-8 _*_
-
+import json
 import hashlib
+import urllib.error
 import urllib.parse
 import urllib.request
-import urllib.error
-import json
 
-# 接口api
 
 class AiPlatBase(object):
 
-    def __init__(self, app_id, app_key):
+    def __init__(self, app_id: str, app_key: str):
         self.app_id = app_id
         self.app_key = app_key
         self.data = {}
