@@ -1,10 +1,10 @@
-# Tencent_aiplat_SDK
+# Tencent_aiplat_SDK (Archived)
 
-A third party python-based SDK for Tencent AI Platform.
+A third party python-based SDK for Tencent AI Platform. This repo is archived because the platform has a official SDK for Python.
 
 **Python 3 only** since the official one using Python 2.
 
-第三方的腾讯 AI 平台 SDK，基于 Python 3。
+第三方的腾讯 AI 平台 SDK，基于 Python 3。目前该项目已归档，官方已经有了完整的官方 SDK 可供使用。
 
 ## How to use it?
 
